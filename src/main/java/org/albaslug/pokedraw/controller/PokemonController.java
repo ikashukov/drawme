@@ -9,17 +9,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class PokemonController {
+
+    private static final String BULBAPEDIA_LINK = "https://archives.bulbagarden.net/wiki/Category:%s";
 
     private final PokemonService pokemonService;
     private final ActionService actionService;
 
-    @GetMapping
+    @GetMapping("/pokemon")
     public String getPokemonAndAction(Model model) {
-        model.addAttribute("task", pokemonService.getRandomPokemon()
+        String pokemonName = pokemonService.getRandomPokemon();
+        model.addAttribute("link", String.format(BULBAPEDIA_LINK, pokemonName));
+        model.addAttribute("task", pokemonName
                 + " + "
                 + actionService.getAction());
-        return "combo";
+        return "pokemon-challenge";
     }
 
 }
