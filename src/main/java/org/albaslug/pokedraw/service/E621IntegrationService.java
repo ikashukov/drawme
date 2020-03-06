@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
-import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,27 +25,37 @@ public class E621IntegrationService {
 
     private Map<String, E621Tag> characters;
 
-    //@PostConstruct
+    @PostConstruct
     private void buildCharacterMap() {
         e621Client = buildE621Client();
         characters = getAllCharacters();
     }
 
+    public List<String> getDisneyCharacters() {
+        return characters.values().stream()
+                .filter(e -> e.getRelated_tags().contains("disney"))
+                .map(E621Tag::getName)
+                .collect(Collectors.toList());
+    }
+
     private WebClient buildE621Client() {
+        ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(1024 * 1024 * 10)).build();
         return WebClient.builder()
+                .exchangeStrategies(exchangeStrategies)
                 .baseUrl("https://e621.net")
                 .defaultHeader(HttpHeaders.USER_AGENT, userAgent)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 
-    public Map<String, E621Tag> getAllCharacters() {
+    private Map<String, E621Tag> getAllCharacters() {
         e621Client = buildE621Client();
         WebClient.RequestHeadersSpec<?> uri2 = e621Client
                 .get()
                 .uri(String.format(REQUEST_TEMPLATE, 1));
-        List<E621Tag> o = (List<E621Tag>) uri2.exchange().block();
-        if(o == null) {
+        List<E621Tag> o = uri2.exchange().block().bodyToFlux(E621Tag.class).collectList().block();
+        if (o == null) {
             return null;
         }
         return o.stream()
