@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.albaslug.pokedraw.service.ActionService;
 import org.albaslug.pokedraw.service.E621IntegrationService;
 import org.albaslug.pokedraw.service.FurryCharacterService;
+import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class FurryCharacterController {
     public String getChallenge(Model model) {
         String character = furryCharacterService.getRandomFurryCharacter();
         model.addAttribute("link", String.format(E621_LINK, character));
-        model.addAttribute("task", character
+        model.addAttribute("task", WordUtils.capitalize(character.replaceAll("_", " "))
                 + " + "
                 + actionService.getAction());
         return "furry-challenge";
