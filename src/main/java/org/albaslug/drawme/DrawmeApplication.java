@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PokedrawApplication {
+public class DrawmeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PokedrawApplication.class, args);
+        SpringApplication.run(DrawmeApplication.class, args);
     }
 
 }
