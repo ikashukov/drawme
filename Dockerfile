@@ -1,4 +1,11 @@
+FROM openjdk:8-jdk-alpine AS builder
+COPY src/ src/
+COPY .mvn .mvn
+COPY pom.xml .
+COPY mvnw .
+RUN chmod +x ./mvnw && ./mvnw clean package -DskipTests
+COPY target/*.jar /app.jar
+
 FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+COPY --from=builder /app.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
