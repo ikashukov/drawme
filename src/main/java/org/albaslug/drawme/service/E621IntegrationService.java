@@ -1,6 +1,6 @@
-package org.albaslug.pokedraw.service;
+package org.albaslug.drawme.service;
 
-import org.albaslug.pokedraw.entity.E621Tag;
+import org.albaslug.drawme.entity.E621Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +49,7 @@ public class E621IntegrationService {
         WebClient.RequestHeadersSpec<?> uri2 = e621Client
                 .get()
                 .uri(String.format(REQUEST_TEMPLATE, 1));
-        return uri2.exchange().block().bodyToFlux(E621Tag.class).collectList().block();
+        return Objects.requireNonNull(uri2.exchange().block()).bodyToFlux(E621Tag.class).collectList().block();
     }
 
 

@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.albaslug</groupId>
-    <artifactId>pokedraw</artifactId>
+    <artifactId>drawme</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>pokedraw</name>
-    <description>Random Pokemon, random action</description>
+    <name>drawme</name>
+    <description>Randomized drawing challenges</description>
 
     <properties>
         <java.version>1.8</java.version>

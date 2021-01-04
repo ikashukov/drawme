@@ -1,8 +1,8 @@
-package org.albaslug.pokedraw.controller;
+package org.albaslug.drawme.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.albaslug.pokedraw.service.ActionService;
-import org.albaslug.pokedraw.service.PokemonService;
+import org.albaslug.drawme.service.ActionService;
+import org.albaslug.drawme.service.PokemonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

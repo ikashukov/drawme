@@ -1,4 +1,4 @@
-package org.albaslug.pokedraw.service;
+package org.albaslug.drawme.service;
 
 import org.springframework.stereotype.Service;
 

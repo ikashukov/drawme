@@ -1,9 +1,9 @@
-package org.albaslug.pokedraw.controller;
+package org.albaslug.drawme.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.albaslug.pokedraw.service.ActionService;
-import org.albaslug.pokedraw.service.E621IntegrationService;
-import org.albaslug.pokedraw.service.FurryCharacterService;
+import org.albaslug.drawme.service.ActionService;
+import org.albaslug.drawme.service.E621IntegrationService;
+import org.albaslug.drawme.service.FurryCharacterService;
 import org.apache.commons.lang3.text.WordUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

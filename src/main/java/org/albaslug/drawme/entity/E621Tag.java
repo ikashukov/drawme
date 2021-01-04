@@ -1,4 +1,4 @@
-package org.albaslug.pokedraw.entity;
+package org.albaslug.drawme.entity;
 
 import lombok.Data;
 
